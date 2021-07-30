@@ -17,6 +17,10 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        dataBinding true
+    }
+
     buildTypes {
         debug {
             buildConfigField("String", "NEWS_API_HOST", "\"https://newsapi.org/v2/\"")

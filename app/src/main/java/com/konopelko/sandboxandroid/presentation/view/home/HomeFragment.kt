@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.konopelko.sandboxandroid.R
 import com.konopelko.sandboxandroid.SandboxAndroidApplication
 import com.konopelko.sandboxandroid.presentation.viewmodel.home.HomeViewModel
 import javax.inject.Inject
@@ -19,9 +20,7 @@ class HomeFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
+    ): View? = inflater.inflate(R.layout.fragment_home, container, false)
 
     override fun onAttach(context: Context) {
         (context.applicationContext as SandboxAndroidApplication).appComponent.inject(this)
@@ -31,5 +30,6 @@ class HomeFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        
     }
 }
