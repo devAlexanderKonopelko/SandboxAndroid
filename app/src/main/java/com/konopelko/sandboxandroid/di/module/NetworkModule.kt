@@ -8,13 +8,16 @@ import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
 import javax.inject.Inject
+import javax.inject.Singleton
 
 @Module
 class NetworkModule {
 
+    @Singleton
     @Provides
     fun provideHttpClient(): OkHttpClient = createHttpClient()
 
+    @Singleton
     @Provides
     @Inject
     fun provideApi(httpClient: OkHttpClient): NewsApi =
