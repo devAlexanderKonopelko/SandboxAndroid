@@ -1,4 +1,4 @@
-package com.konopelko.sandboxandroid.di.module
+package com.konopelko.sandboxandroid.di.module.repository
 
 import com.konopelko.sandboxandroid.data.api.NewsApi
 import com.konopelko.sandboxandroid.data.repository.RealNewsRepository

@@ -1,4 +1,4 @@
-package com.konopelko.sandboxandroid.di.module
+package com.konopelko.sandboxandroid.di.module.network
 
 import com.konopelko.sandboxandroid.BuildConfig
 import com.konopelko.sandboxandroid.data.api.NewsApi

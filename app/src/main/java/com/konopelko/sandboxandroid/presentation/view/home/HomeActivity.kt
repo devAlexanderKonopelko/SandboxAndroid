@@ -8,10 +8,7 @@ import javax.inject.Inject
 
 class HomeActivity: AppCompatActivity() {
 
-    @Inject lateinit var viewModel: HomeViewModel
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        (applicationContext as SandboxAndroidApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
     }
 }
