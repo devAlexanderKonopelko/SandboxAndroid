@@ -39,9 +39,20 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
+
+        showLoadingBar()
         viewModel.articles.observe(viewLifecycleOwner) {
+            hideLoadingBar()
             updateNewsList(it)
         }
+    }
+
+    private fun showLoadingBar() {
+        binding?.homeLoadingBar?.visibility = View.VISIBLE
+    }
+
+    private fun hideLoadingBar() {
+        binding?.homeLoadingBar?.visibility = View.GONE
     }
 
     private fun setupRecyclerView() {

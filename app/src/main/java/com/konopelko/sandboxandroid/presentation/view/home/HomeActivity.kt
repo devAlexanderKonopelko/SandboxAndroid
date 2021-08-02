@@ -10,7 +10,6 @@ import javax.inject.Inject
 class HomeActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
-//        (applicationContext as SandboxAndroidApplication).appComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
     }

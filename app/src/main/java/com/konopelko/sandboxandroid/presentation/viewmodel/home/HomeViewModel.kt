@@ -1,5 +1,6 @@
 package com.konopelko.sandboxandroid.presentation.viewmodel.home
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.konopelko.sandboxandroid.data.api.entity.response.NewsResponse
@@ -10,20 +11,18 @@ import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
     getAndroidNews: GetAndroidNewsUseCase
-): ViewModel() {
+) : ViewModel() {
 
-    val articles: MutableLiveData<List<NewsResponse.Article>> by lazy {
-        MutableLiveData<List<NewsResponse.Article>>()
-    }
+    val articles = MutableLiveData<List<NewsResponse.Article>>()
 
     init {
         getAndroidNews()
-            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                       articles.value = it.articles
-            },{
-                //
+                articles.value = it.articles
+            }, {
+                Log.e("News ", "error")
+                it.printStackTrace()
             })
     }
 }
