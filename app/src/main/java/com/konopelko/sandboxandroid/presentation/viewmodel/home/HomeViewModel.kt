@@ -13,11 +13,26 @@ class HomeViewModel @Inject constructor(
     getAndroidNews: GetAndroidNewsUseCase
 ) : ViewModel() {
 
-    val articles = MutableLiveData<List<NewsResponse.Article>>()
+    private val _articles = MutableLiveData<List<NewsResponse.Article>>()
+    val articles: LiveData<List<NewsResponse.Article>> = _articles
 
-    var lifecycleOwner: LifecycleOwner? = null
+    private val _dataIsLoading = MutableLiveData<Boolean>()
+    val dataIsLoading: LiveData<Boolean> = _dataIsLoading
 
     private val subscriptions = mutableListOf<Disposable>()
+
+    init {
+        _dataIsLoading.value = true
+        getAndroidNews()
+            .subscribe({
+                _dataIsLoading.postValue(false)
+                _articles.postValue(it.articles)
+            }, {
+                Log.e("News ", "error")
+                it.printStackTrace()
+            })
+            .addToSubscriptions(subscriptions)
+    }
 
     private val lifecycleObserver = object : DefaultLifecycleObserver {
         override fun onDestroy(owner: LifecycleOwner) {
@@ -29,15 +44,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    init {
-        lifecycleOwner?.lifecycle?.addObserver(lifecycleObserver)
-        getAndroidNews()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({
-                articles.value = it.articles
-            }, {
-                Log.e("News ", "error")
-                it.printStackTrace()
-            }).addToSubscriptions(subscriptions)
+    fun setupLifecycleOwner(viewLifecycleOwner: LifecycleOwner) {
+        viewLifecycleOwner.lifecycle.addObserver(lifecycleObserver)
     }
 }

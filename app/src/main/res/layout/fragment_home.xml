@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewmodel"
             type="com.konopelko.sandboxandroid.presentation.viewmodel.home.HomeViewModel" />
@@ -18,22 +19,22 @@
             android:id="@+id/newsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingTop="@dimen/spacing_s"
             android:paddingStart="@dimen/spacing_s"
+            android:paddingTop="@dimen/spacing_s"
             android:paddingEnd="@dimen/spacing_s"
             app:data="@{viewmodel.articles}"
-            tools:listitem="@layout/item_recycler_article"/>
+            tools:listitem="@layout/item_recycler_article" />
 
         <ProgressBar
             android:id="@+id/homeLoadingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:visibility="@{viewmodel.dataIsLoading ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible"/>
+            tools:visibility="visible" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

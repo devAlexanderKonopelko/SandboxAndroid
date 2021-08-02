@@ -33,6 +33,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        setupBinding()
         return binding!!.root
     }
 
@@ -40,19 +41,12 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
 
-        showLoadingBar()
-        viewModel.lifecycleOwner = viewLifecycleOwner
-        viewModel.articles.observe(viewLifecycleOwner) {
-            hideLoadingBar()
-        }
+        viewModel.setupLifecycleOwner(viewLifecycleOwner)
     }
 
-    private fun showLoadingBar() {
-        binding?.homeLoadingBar?.visibility = View.VISIBLE
-    }
-
-    private fun hideLoadingBar() {
-        binding?.homeLoadingBar?.visibility = View.GONE
+    private fun setupBinding() {
+        binding?.lifecycleOwner = viewLifecycleOwner
+        binding?.viewmodel = viewModel
     }
 
     private fun setupRecyclerView() {
