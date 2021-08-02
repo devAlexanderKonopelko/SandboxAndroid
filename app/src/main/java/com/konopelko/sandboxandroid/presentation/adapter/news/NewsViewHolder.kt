@@ -7,7 +7,6 @@ import com.konopelko.sandboxandroid.databinding.ItemRecyclerArticleBinding
 class NewsViewHolder(private val binding: ItemRecyclerArticleBinding) :
     RecyclerView.ViewHolder(binding.root) {
 
-
     fun bind(article: NewsResponse.Article) {
         binding.article = article
         binding.executePendingBindings()

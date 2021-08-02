@@ -24,6 +24,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_150"
                 app:layout_constraintTop_toTopOf="parent"
+                imageUrl="@{article.urlToImage}"
                 tools:background="@color/gray"
                 tools:layout_height="150dp" />
             <TextView
