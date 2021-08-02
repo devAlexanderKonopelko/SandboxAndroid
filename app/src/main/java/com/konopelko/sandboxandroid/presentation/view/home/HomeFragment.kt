@@ -41,9 +41,9 @@ class HomeFragment : Fragment() {
         setupRecyclerView()
 
         showLoadingBar()
+        viewModel.lifecycleOwner = viewLifecycleOwner
         viewModel.articles.observe(viewLifecycleOwner) {
             hideLoadingBar()
-            updateNewsList(it)
         }
     }
 
@@ -59,10 +59,6 @@ class HomeFragment : Fragment() {
         newsRecyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
         newsRecyclerView.adapter = NewsAdapter()
-    }
-
-    private fun updateNewsList(articles: List<NewsResponse.Article>) {
-        (newsRecyclerView.adapter as NewsAdapter).setData(articles)
     }
 
     override fun onDestroyView() {
