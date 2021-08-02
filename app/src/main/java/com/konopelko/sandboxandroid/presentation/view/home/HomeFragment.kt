@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.konopelko.sandboxandroid.SandboxAndroidApplication
-import com.konopelko.sandboxandroid.data.api.entity.response.NewsResponse
 import com.konopelko.sandboxandroid.databinding.FragmentHomeBinding
 import com.konopelko.sandboxandroid.presentation.adapter.news.NewsAdapter
 import com.konopelko.sandboxandroid.presentation.viewmodel.home.HomeViewModel
@@ -41,7 +40,14 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
+        setupOnRefreshListener()
         viewModel.setupLifecycleOwner(viewLifecycleOwner)
+    }
+
+    private fun setupOnRefreshListener() {
+        binding?.homeSwipeRefreshLayout?.setOnRefreshListener {
+            viewModel.reloadNews()
+        }
     }
 
     private fun setupBinding() {

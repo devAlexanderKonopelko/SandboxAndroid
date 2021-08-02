@@ -9,25 +9,36 @@ import io.reactivex.rxjava3.disposables.Disposable
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
-    getAndroidNews: GetAndroidNewsUseCase
+    private val getAndroidNews: GetAndroidNewsUseCase
 ) : ViewModel() {
 
     private val articles = MutableLiveData<List<NewsResponse.Article>>()
-    private val dataIsLoading = MutableLiveData<Boolean>()
+    private val isDataLoading = MutableLiveData<Boolean>()
+    private val isDataReLoading = MutableLiveData<Boolean>()
 
     private val subscriptions = mutableListOf<Disposable>()
 
     init {
-        dataIsLoading.value = true
+        isDataLoading.value = true
+        loadNews()
+    }
+
+    private fun loadNews() {
         getAndroidNews()
             .subscribe({
-                dataIsLoading.postValue(false)
+                isDataReLoading.postValue(false)
+                isDataLoading.postValue(false)
                 articles.postValue(it.articles)
             }, {
                 Log.e("News ", "error")
                 it.printStackTrace()
             })
             .addToSubscriptions(subscriptions)
+    }
+
+    fun reloadNews() {
+        isDataReLoading.value = true
+        loadNews()
     }
 
     private val lifecycleObserver = object : DefaultLifecycleObserver {
@@ -46,5 +57,7 @@ class HomeViewModel @Inject constructor(
 
     fun getArticles(): LiveData<List<NewsResponse.Article>> = articles
 
-    fun getDataIsLoading(): LiveData<Boolean> = dataIsLoading
+    fun getIsDataLoading(): LiveData<Boolean> = isDataLoading
+
+    fun getIsDataReLoading(): LiveData<Boolean> = isDataReLoading
 }

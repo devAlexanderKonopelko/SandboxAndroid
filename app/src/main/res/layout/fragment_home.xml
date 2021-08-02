@@ -15,21 +15,27 @@
         android:layout_height="match_parent"
         android:background="@color/gray_2">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/newsRecyclerView"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/homeSwipeRefreshLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingStart="@dimen/spacing_s"
-            android:paddingTop="@dimen/spacing_s"
-            android:paddingEnd="@dimen/spacing_s"
-            app:data="@{viewmodel.articles}"
-            tools:listitem="@layout/item_recycler_article" />
+            isRefreshing="@{viewmodel.isDataReLoading}">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/newsRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="@dimen/spacing_s"
+                android:paddingTop="@dimen/spacing_s"
+                android:paddingEnd="@dimen/spacing_s"
+                app:data="@{viewmodel.articles}"
+                tools:listitem="@layout/item_recycler_article" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         <ProgressBar
             android:id="@+id/homeLoadingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:visibility="@{viewmodel.dataIsLoading ? View.VISIBLE : View.GONE}"
+            android:visibility="@{viewmodel.isDataLoading ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
