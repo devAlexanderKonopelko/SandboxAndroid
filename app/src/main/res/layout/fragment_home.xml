@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
             name="viewmodel"
@@ -16,7 +17,11 @@
             android:id="@+id/newsRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:data="@{viewmodel.articles}"/>
+            android:paddingTop="@dimen/spacing_s"
+            android:paddingStart="@dimen/spacing_s"
+            android:paddingEnd="@dimen/spacing_s"
+            app:data="@{viewmodel.articles}"
+            tools:listitem="@layout/item_recycler_article"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
