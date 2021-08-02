@@ -6,30 +6,56 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.konopelko.sandboxandroid.R
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.konopelko.sandboxandroid.SandboxAndroidApplication
+import com.konopelko.sandboxandroid.data.api.entity.response.NewsResponse
+import com.konopelko.sandboxandroid.databinding.FragmentHomeBinding
+import com.konopelko.sandboxandroid.presentation.adapter.news.NewsAdapter
 import com.konopelko.sandboxandroid.presentation.viewmodel.home.HomeViewModel
+import kotlinx.android.synthetic.main.fragment_home.*
 import javax.inject.Inject
 
-class HomeFragment: Fragment() {
+class HomeFragment : Fragment() {
 
     @Inject
     lateinit var viewModel: HomeViewModel
+
+    private var binding: FragmentHomeBinding? = null
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        (context.applicationContext as SandboxAndroidApplication).appComponent.inject(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? = inflater.inflate(R.layout.fragment_home, container, false)
-
-    override fun onAttach(context: Context) {
-        (context.applicationContext as SandboxAndroidApplication).appComponent.inject(this)
-        super.onAttach(context)
+    ): View? {
+        binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupRecyclerView()
+        viewModel.articles.observe(viewLifecycleOwner) {
+            updateNewsList(it)
+        }
+    }
 
-        
+    private fun setupRecyclerView() {
+        newsRecyclerView.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+        newsRecyclerView.adapter = NewsAdapter()
+    }
+
+    private fun updateNewsList(articles: List<NewsResponse.Article>) {
+        (newsRecyclerView.adapter as NewsAdapter).setData(articles)
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding = null
     }
 }

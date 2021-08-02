@@ -23,8 +23,8 @@ class NewsAdapter : RecyclerView.Adapter<NewsViewHolder>(), BindableAdapter<List
 
     override fun getItemCount(): Int = articles.size
 
-    override fun setData(data: List<NewsResponse.Article>) {
-        articles = data
+    override fun setData(data: List<NewsResponse.Article>?) {
+        articles = data ?: listOf()
         notifyDataSetChanged()
     }
 }

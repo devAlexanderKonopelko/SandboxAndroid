@@ -12,5 +12,7 @@ import javax.inject.Singleton
 @Component(modules = [NetworkModule::class, UseCaseModule::class, RepositoryModule::class])
 interface ApplicationComponent {
 
+    fun inject(activity: HomeActivity)
+
     fun inject(fragment: HomeFragment)
 }
