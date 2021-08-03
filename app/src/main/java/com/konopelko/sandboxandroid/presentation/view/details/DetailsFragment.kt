@@ -1,6 +1,8 @@
 package com.konopelko.sandboxandroid.presentation.view.details
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +40,19 @@ class DetailsFragment: Fragment() {
         binding = FragmentDetailsBinding.inflate(inflater, container, false)
         setupBinding()
         return binding!!.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        viewModel.getIsReadArticleClicked().observe(viewLifecycleOwner) {
+            if(it) openArticleInBrowser()
+        }
+    }
+
+    private fun openArticleInBrowser() {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(viewModel.getArticle().value?.url))
+        startActivity(intent)
     }
 
     private fun setupBinding() {

@@ -40,11 +40,12 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupRecyclerView()
-        setupOnRefreshListener()
+        setupSwipeRefreshLayout()
         viewModel.setupLifecycleOwner(viewLifecycleOwner)
     }
 
-    private fun setupOnRefreshListener() {
+    private fun setupSwipeRefreshLayout() {
+        binding?.homeSwipeRefreshLayout?.isRefreshing = false
         binding?.homeSwipeRefreshLayout?.setOnRefreshListener {
             viewModel.reloadNews()
         }

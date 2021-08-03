@@ -15,7 +15,7 @@
         <ImageView
             android:id="@+id/articleDetailsImage"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/size_200"
+            android:layout_height="@dimen/size_250"
             android:scaleType="centerCrop"
             imageUrl="@{viewModel.article.urlToImage}"
             app:layout_constraintTop_toTopOf="parent" />
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_m"
             android:layout_marginEnd="@dimen/spacing_s"
-            android:layout_marginTop="@dimen/spacing_s"
+            android:layout_marginTop="@dimen/spacing_m"
             android:text="@{viewModel.article.title}"
             android:fontFamily="sans-serif-black"
             android:textColor="@color/black"
@@ -46,15 +46,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/articleDetailsImage"
             tools:text="Lorem Lorem Lorem Lorem Lorem" />
+
         <ImageView
             android:id="@+id/articleDetailsBookmarkBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/spacing_s"
             android:layout_marginEnd="@dimen/spacing_m"
             android:src="@drawable/ic_bookmark"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/articleDetailsImage" />
+            app:layout_constraintTop_toTopOf="@+id/articleItemHeadline" />
         <TextView
             android:id="@+id/articleDetailsAuthor"
             android:layout_width="wrap_content"

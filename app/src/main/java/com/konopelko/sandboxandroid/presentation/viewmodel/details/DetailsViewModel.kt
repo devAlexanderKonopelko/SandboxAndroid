@@ -1,6 +1,5 @@
 package com.konopelko.sandboxandroid.presentation.viewmodel.details
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,9 +12,10 @@ class DetailsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val article = MutableLiveData<NewsResponse.Article>()
+    private val isReadArticleClicked = MutableLiveData<Boolean>()
 
     fun onArticleClicked() {
-        Log.e("Article ", "read clicked")
+        isReadArticleClicked.value = true
     }
 
     fun onBackClicked() {
@@ -27,4 +27,6 @@ class DetailsViewModel @Inject constructor(
     }
 
     fun getArticle(): LiveData<NewsResponse.Article> = article
+
+    fun getIsReadArticleClicked(): LiveData<Boolean> = isReadArticleClicked
 }

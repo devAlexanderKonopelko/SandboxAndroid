@@ -34,6 +34,8 @@ class HomeViewModel @Inject constructor(
                 articles.postValue(it.articles)
             }, {
                 Log.e("News ", "error")
+                isDataReLoading.postValue(false)
+                isDataLoading.postValue(false)
                 it.printStackTrace()
             })
             .addToSubscriptions(subscriptions)
