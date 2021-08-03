@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.konopelko.sandboxandroid.data.api.entity.response.NewsResponse
 import com.konopelko.sandboxandroid.domain.usecase.getnews.GetAndroidNewsUseCase
+import com.konopelko.sandboxandroid.presentation.navigation.Screens
 import com.konopelko.sandboxandroid.utils.disposable.addToSubscriptions
 import io.reactivex.rxjava3.disposables.Disposable
 import ru.terrakok.cicerone.Router
@@ -43,9 +44,13 @@ class HomeViewModel @Inject constructor(
         loadNews()
     }
 
+    fun onNewsClicked(news: NewsResponse.Article) {
+        val screen = Screens.DetailsScreen(news)
+        router.navigateTo(screen)
+    }
+
     private val lifecycleObserver = object : DefaultLifecycleObserver {
         override fun onDestroy(owner: LifecycleOwner) {
-            Log.e("Rx ", "disposing subscriptions")
             subscriptions.forEach {
                 it.dispose()
             }

@@ -58,7 +58,9 @@ class HomeFragment : Fragment() {
     private fun setupRecyclerView() {
         newsRecyclerView.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-        newsRecyclerView.adapter = NewsAdapter()
+        newsRecyclerView.adapter = NewsAdapter { article ->
+            viewModel.onNewsClicked(article)
+        }
     }
 
     override fun onDestroyView() {

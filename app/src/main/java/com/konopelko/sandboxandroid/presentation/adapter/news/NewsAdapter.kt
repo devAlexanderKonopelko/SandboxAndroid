@@ -9,10 +9,14 @@ import com.konopelko.sandboxandroid.data.api.entity.response.NewsResponse
 import com.konopelko.sandboxandroid.databinding.ItemRecyclerArticleBinding
 import com.konopelko.sandboxandroid.utils.databinding.adapter.BindableAdapter
 
-class NewsAdapter : RecyclerView.Adapter<NewsViewHolder>(),
+class NewsAdapter(
+    private val onNewsClickListener: (NewsResponse.Article) -> Unit
+) : RecyclerView.Adapter<NewsViewHolder>(),
     BindableAdapter<List<NewsResponse.Article>> {
 
     private var articles = listOf<NewsResponse.Article>()
+
+    fun onNewsClicked(news: NewsResponse.Article) = onNewsClickListener(news)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -22,7 +26,7 @@ class NewsAdapter : RecyclerView.Adapter<NewsViewHolder>(),
             parent,
             false
         )
-        return NewsViewHolder(binding)
+        return NewsViewHolder(binding, this)
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
