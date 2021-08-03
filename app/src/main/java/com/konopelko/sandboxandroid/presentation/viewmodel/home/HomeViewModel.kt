@@ -6,10 +6,12 @@ import com.konopelko.sandboxandroid.data.api.entity.response.NewsResponse
 import com.konopelko.sandboxandroid.domain.usecase.getnews.GetAndroidNewsUseCase
 import com.konopelko.sandboxandroid.utils.disposable.addToSubscriptions
 import io.reactivex.rxjava3.disposables.Disposable
+import ru.terrakok.cicerone.Router
 import javax.inject.Inject
 
 class HomeViewModel @Inject constructor(
-    private val getAndroidNews: GetAndroidNewsUseCase
+    private val getAndroidNews: GetAndroidNewsUseCase,
+    private val router: Router
 ) : ViewModel() {
 
     private val articles = MutableLiveData<List<NewsResponse.Article>>()

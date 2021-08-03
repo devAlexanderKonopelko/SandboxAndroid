@@ -1,5 +1,6 @@
 package com.konopelko.sandboxandroid.di.component
 
+import com.konopelko.sandboxandroid.di.module.navigation.NavigationModule
 import com.konopelko.sandboxandroid.di.module.network.NetworkModule
 import com.konopelko.sandboxandroid.di.module.repository.RepositoryModule
 import com.konopelko.sandboxandroid.di.module.usecase.UseCaseModule
@@ -10,7 +11,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = [NetworkModule::class, UseCaseModule::class, RepositoryModule::class])
+@Component(modules = [NetworkModule::class, UseCaseModule::class, RepositoryModule::class, NavigationModule::class])
 interface ApplicationComponent {
 
     fun inject(activity: HomeActivity)
