@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment
 import com.konopelko.sandboxandroid.SandboxAndroidApplication
 import com.konopelko.sandboxandroid.data.api.entity.response.NewsResponse
 import com.konopelko.sandboxandroid.databinding.FragmentDetailsBinding
-import com.konopelko.sandboxandroid.databinding.FragmentHomeBinding
 import com.konopelko.sandboxandroid.presentation.viewmodel.details.DetailsViewModel
 import javax.inject.Inject
 
@@ -20,6 +19,11 @@ class DetailsFragment: Fragment() {
     lateinit var viewModel: DetailsViewModel
 
     private var binding: FragmentDetailsBinding? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.setArticle(arguments?.getParcelable(KEY_ARTICLE)!!)
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -38,7 +42,7 @@ class DetailsFragment: Fragment() {
 
     private fun setupBinding() {
         binding?.lifecycleOwner = viewLifecycleOwner
-//        binding?.viewmodel = viewModel
+        binding?.viewModel = viewModel
     }
 
     companion object {

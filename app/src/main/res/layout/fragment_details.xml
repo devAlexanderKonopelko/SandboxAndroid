@@ -4,15 +4,99 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <variable
+            name="viewModel"
+            type="com.konopelko.sandboxandroid.presentation.viewmodel.details.DetailsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
+        <ImageView
+            android:id="@+id/articleDetailsImage"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="details"/>
+            android:layout_height="@dimen/size_200"
+            android:scaleType="centerCrop"
+            imageUrl="@{viewModel.article.urlToImage}"
+            app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="@dimen/size_50"
+            android:layout_height="@dimen/size_50"
+            android:layout_marginTop="@dimen/spacing_s"
+            android:layout_marginStart="@dimen/spacing_s"
+            android:onClick="@{() -> viewModel.onBackClicked()}"
+            android:background="@drawable/shape_circle_purple"
+            app:icon="@drawable/ic_arrow_back"
+            app:iconGravity="textStart"
+            app:iconPadding="@dimen/spacing_zero"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+        <TextView
+            android:id="@+id/articleItemHeadline"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_m"
+            android:layout_marginEnd="@dimen/spacing_s"
+            android:layout_marginTop="@dimen/spacing_s"
+            android:text="@{viewModel.article.title}"
+            android:fontFamily="sans-serif-black"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_m4"
+            app:layout_constraintEnd_toStartOf="@+id/articleDetailsBookmarkBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/articleDetailsImage"
+            tools:text="Lorem Lorem Lorem Lorem Lorem" />
+        <ImageView
+            android:id="@+id/articleDetailsBookmarkBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_s"
+            android:layout_marginEnd="@dimen/spacing_m"
+            android:src="@drawable/ic_bookmark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/articleDetailsImage" />
+        <TextView
+            android:id="@+id/articleDetailsAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_s"
+            android:text="@{viewModel.article.author}"
+            app:layout_constraintStart_toStartOf="@+id/articleItemHeadline"
+            app:layout_constraintTop_toBottomOf="@+id/articleItemHeadline"
+            tools:text="Alexander Konopelko" />
+        <TextView
+            android:id="@+id/articleDetailsDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/spacing_s"
+            android:text="@{viewModel.article.publishedAt}"
+            app:layout_constraintStart_toEndOf="@+id/articleDetailsAuthor"
+            app:layout_constraintTop_toTopOf="@+id/articleDetailsAuthor"
+            tools:text="01.02.2003" />
+        <TextView
+            android:id="@+id/articleDetailsText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_m"
+            android:layout_marginStart="@dimen/spacing_m"
+            android:layout_marginEnd="@dimen/spacing_m"
+            android:text="@{viewModel.article.content}"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/articleDetailsAuthor"
+            tools:text="ArticleItem articleItem articleItem articleItem articleItem articleItemarticleItemarticleItemarticleItemarticleItemarticleItemarticleItem" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/articleDetailsReadBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/spacing_m"
+            android:onClick="@{() -> viewModel.onArticleClicked()}"
+            android:text="@string/read_article"
+            app:icon="@drawable/ic_arrow_right"
+            app:iconGravity="end"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/articleDetailsText" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
