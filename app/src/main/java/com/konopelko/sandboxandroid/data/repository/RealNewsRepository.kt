@@ -14,8 +14,14 @@ class RealNewsRepository @Inject constructor(
     private val api: NewsApi
 ): NewsRepository {
 
-    override fun getNews(keyWord: String): Single<NewsResponse> =
+    override fun getNews(keyWord: String, page: Int): Single<NewsResponse> =
         api
-            .getNews(keyWord, BuildConfig.NEWS_APP_KEY)
+            .getNews(prepareGetNewsParams(keyWord, page))
             .subscribeOn(Schedulers.io())
+
+    private fun prepareGetNewsParams(keyWord: String, page: Int) = mapOf(
+        "q" to keyWord,
+        "page" to page.toString(),
+        "apiKey" to BuildConfig.NEWS_APP_KEY
+    )
 }

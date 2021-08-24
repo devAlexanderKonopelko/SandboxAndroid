@@ -2,6 +2,7 @@ package com.konopelko.sandboxandroid.presentation.viewmodel.home
 
 import android.util.Log
 import androidx.lifecycle.*
+import androidx.paging.PagingData
 import com.konopelko.sandboxandroid.data.api.entity.response.NewsResponse
 import com.konopelko.sandboxandroid.domain.usecase.getnews.GetAndroidNewsUseCase
 import com.konopelko.sandboxandroid.presentation.navigation.Screens
@@ -15,7 +16,7 @@ class HomeViewModel @Inject constructor(
     private val router: Router
 ) : ViewModel() {
 
-    private val articles = MutableLiveData<List<NewsResponse.Article>>()
+    private val articles = MutableLiveData<PagingData<NewsResponse.Article>>()
     private val isDataLoading = MutableLiveData<Boolean>()
     private val isDataReLoading = MutableLiveData<Boolean>()
 
@@ -27,16 +28,19 @@ class HomeViewModel @Inject constructor(
     }
 
     private fun loadNews() {
+        Log.e("ViewModel ", "loadNews()")
         getAndroidNews()
             .subscribe({
+                Log.e("ViewModel ", "data received: $it")
+                Log.e("ViewModel ", "post value")
                 isDataReLoading.postValue(false)
                 isDataLoading.postValue(false)
-                articles.postValue(it.articles)
+                articles.postValue(it)
             }, {
                 Log.e("News ", "error")
+                it.printStackTrace()
                 isDataReLoading.postValue(false)
                 isDataLoading.postValue(false)
-                it.printStackTrace()
             })
             .addToSubscriptions(subscriptions)
     }
@@ -64,7 +68,7 @@ class HomeViewModel @Inject constructor(
         viewLifecycleOwner.lifecycle.addObserver(lifecycleObserver)
     }
 
-    fun getArticles(): LiveData<List<NewsResponse.Article>> = articles
+    fun getArticles(): LiveData<PagingData<NewsResponse.Article>> = articles
 
     fun getIsDataLoading(): LiveData<Boolean> = isDataLoading
 

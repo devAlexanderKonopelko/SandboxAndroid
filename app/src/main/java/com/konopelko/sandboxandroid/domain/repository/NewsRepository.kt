@@ -6,5 +6,5 @@ import io.reactivex.rxjava3.core.Single
 
 interface NewsRepository {
 
-    fun getNews(keyWord: String): Single<NewsResponse>
+    fun getNews(keyWord: String, page: Int): Single<NewsResponse>
 }

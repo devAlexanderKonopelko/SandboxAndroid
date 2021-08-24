@@ -1,20 +1,25 @@
 package com.konopelko.sandboxandroid.presentation.adapter.news
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.recyclerview.widget.RecyclerView
+import androidx.paging.PagingData
+import androidx.paging.PagingDataAdapter
+import androidx.recyclerview.widget.DiffUtil
 import com.konopelko.sandboxandroid.R
 import com.konopelko.sandboxandroid.data.api.entity.response.NewsResponse
 import com.konopelko.sandboxandroid.databinding.ItemRecyclerArticleBinding
 import com.konopelko.sandboxandroid.utils.databinding.adapter.BindableAdapter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.launch
 
 class NewsAdapter(
+    diffCallback: DiffUtil.ItemCallback<NewsResponse.Article>,
     private val onNewsClickListener: (NewsResponse.Article) -> Unit
-) : RecyclerView.Adapter<NewsViewHolder>(),
-    BindableAdapter<List<NewsResponse.Article>> {
-
-    private var articles = listOf<NewsResponse.Article>()
+) : PagingDataAdapter<NewsResponse.Article, NewsViewHolder>(diffCallback),
+    BindableAdapter<PagingData<NewsResponse.Article>> {
 
     fun onNewsClicked(news: NewsResponse.Article) = onNewsClickListener(news)
 
@@ -30,13 +35,18 @@ class NewsAdapter(
     }
 
     override fun onBindViewHolder(holder: NewsViewHolder, position: Int) {
-        holder.bind(articles[position])
+        getItem(position)?.let {
+            holder.bind(it)
+        }
     }
 
-    override fun getItemCount(): Int = articles.size
-
-    override fun setData(data: List<NewsResponse.Article>?) {
-        articles = data ?: listOf()
-        notifyDataSetChanged()
+    override fun setData(data: PagingData<NewsResponse.Article>?) {
+        Log.e("Adapter ", "setting data: $data")
+        data?.let {
+            CoroutineScope(Main).launch {
+                submitData(it)
+            }
+        }
+//        notifyDataSetChanged()
     }
 }
