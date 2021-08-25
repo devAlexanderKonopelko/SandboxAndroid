@@ -33,8 +33,6 @@ class HomeViewModel @Inject constructor(
         getAndroidNews()
             .cachedIn(viewModelScope)
             .subscribe({
-                Log.e("ViewModel ", "data received: $it")
-                Log.e("ViewModel ", "post value")
                 isDataReLoading.postValue(false)
                 isDataLoading.postValue(false)
                 articles.postValue(it)
