@@ -4,6 +4,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Lifecycle
 import androidx.paging.PagingData
 import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.DiffUtil
@@ -44,9 +45,8 @@ class NewsAdapter(
         Log.e("Adapter ", "setting data: $data")
         data?.let {
             CoroutineScope(Main).launch {
-                submitData(it)
+                submitData(data)
             }
         }
-//        notifyDataSetChanged()
     }
 }

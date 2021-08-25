@@ -21,8 +21,8 @@ class NewsPagingSource(
             .map {
                 LoadResult.Page(
                     it.articles,
-                    prevKey = params.key?.minus(1),
-                    nextKey = params.key?.plus(1)
+                    prevKey = null,
+                    nextKey = nextPageNumber + 1
                 )
             }
     }

@@ -10,7 +10,6 @@ import com.konopelko.sandboxandroid.data.api.entity.response.NewsResponse
 import com.konopelko.sandboxandroid.data.source.NewsPagingSource
 import com.konopelko.sandboxandroid.domain.repository.NewsRepository
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.core.Single
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import javax.inject.Inject
 

@@ -3,6 +3,7 @@ package com.konopelko.sandboxandroid.presentation.viewmodel.home
 import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.PagingData
+import androidx.paging.rxjava3.cachedIn
 import com.konopelko.sandboxandroid.data.api.entity.response.NewsResponse
 import com.konopelko.sandboxandroid.domain.usecase.getnews.GetAndroidNewsUseCase
 import com.konopelko.sandboxandroid.presentation.navigation.Screens
@@ -30,6 +31,7 @@ class HomeViewModel @Inject constructor(
     private fun loadNews() {
         Log.e("ViewModel ", "loadNews()")
         getAndroidNews()
+            .cachedIn(viewModelScope)
             .subscribe({
                 Log.e("ViewModel ", "data received: $it")
                 Log.e("ViewModel ", "post value")
@@ -56,11 +58,11 @@ class HomeViewModel @Inject constructor(
     }
 
     private val lifecycleObserver = object : DefaultLifecycleObserver {
-        override fun onDestroy(owner: LifecycleOwner) {
+        override fun onStop(owner: LifecycleOwner) {
             subscriptions.forEach {
                 it.dispose()
             }
-            super.onDestroy(owner)
+            super.onStop(owner)
         }
     }
 
