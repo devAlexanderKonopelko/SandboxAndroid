@@ -1,13 +1,15 @@
 package com.konopelko.sandboxandroid.presentation.view.home
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import androidx.paging.PagingDataAdapter
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.konopelko.sandboxandroid.R
 import com.konopelko.sandboxandroid.SandboxAndroidApplication
 import com.konopelko.sandboxandroid.databinding.FragmentHomeBinding
 import com.konopelko.sandboxandroid.presentation.adapter.news.NewsAdapter
@@ -40,10 +42,15 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupStatusBarColor()
 
         setupRecyclerView()
         setupSwipeRefreshLayout()
         viewModel.setupLifecycleOwner(viewLifecycleOwner)
+    }
+
+    private fun setupStatusBarColor() {
+        requireActivity().window.statusBarColor = ResourcesCompat.getColor(resources, R.color.purple_500, null)
     }
 
     private fun setupSwipeRefreshLayout() {

@@ -2,12 +2,15 @@ package com.konopelko.sandboxandroid.presentation.view.details
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.konopelko.sandboxandroid.SandboxAndroidApplication
 import com.konopelko.sandboxandroid.data.api.entity.response.NewsResponse
@@ -15,7 +18,7 @@ import com.konopelko.sandboxandroid.databinding.FragmentDetailsBinding
 import com.konopelko.sandboxandroid.presentation.viewmodel.details.DetailsViewModel
 import javax.inject.Inject
 
-class DetailsFragment: Fragment() {
+class DetailsFragment : Fragment() {
 
     @Inject
     lateinit var viewModel: DetailsViewModel
@@ -36,7 +39,7 @@ class DetailsFragment: Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentDetailsBinding.inflate(inflater, container, false)
         setupBinding()
         return binding!!.root
@@ -44,10 +47,23 @@ class DetailsFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupTransparentStatusBar()
+        setupToolbarPaddings()
 
         viewModel.getIsReadArticleClicked().observe(viewLifecycleOwner) {
-            if(it) openArticleInBrowser()
+            if (it) openArticleInBrowser()
         }
+    }
+
+    private fun setupToolbarPaddings() {
+        ViewCompat.setOnApplyWindowInsetsListener(binding?.detailAppBarLayout!!) { v, insets ->
+            binding?.detailAppBarLayout!!.setPadding(0, 0, 0, 0)
+            WindowInsetsCompat.CONSUMED
+        }
+    }
+
+    private fun setupTransparentStatusBar() {
+        requireActivity().window.statusBarColor = Color.TRANSPARENT
     }
 
     private fun openArticleInBrowser() {
