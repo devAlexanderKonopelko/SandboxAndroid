@@ -3,12 +3,14 @@ package com.konopelko.sandboxandroid.presentation.viewmodel.home
 import android.util.Log
 import androidx.lifecycle.*
 import androidx.paging.PagingData
-import androidx.paging.rxjava3.cachedIn
+import androidx.paging.cachedIn
 import com.konopelko.sandboxandroid.data.api.entity.response.NewsResponse
 import com.konopelko.sandboxandroid.domain.usecase.getnews.GetAndroidNewsUseCase
 import com.konopelko.sandboxandroid.presentation.navigation.Screens
-import com.konopelko.sandboxandroid.utils.disposable.addToSubscriptions
 import io.reactivex.rxjava3.disposables.Disposable
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import ru.terrakok.cicerone.Router
 
 class HomeViewModel(
@@ -29,19 +31,21 @@ class HomeViewModel(
 
     private fun loadNews() {
         Log.e("ViewModel ", "loadNews()")
-        getAndroidNews()
-            .cachedIn(viewModelScope)
-            .subscribe({
-                isDataReLoading.postValue(false)
-                isDataLoading.postValue(false)
-                articles.postValue(it)
-            }, {
-                Log.e("News ", "error")
-                it.printStackTrace()
-                isDataReLoading.postValue(false)
-                isDataLoading.postValue(false)
-            })
-            .addToSubscriptions(subscriptions)
+        viewModelScope.launch {
+            getAndroidNews()
+                .cachedIn(viewModelScope)
+                .catch {
+                    Log.e("News ", "error")
+                    it.printStackTrace()
+                    isDataReLoading.postValue(false)
+                    isDataLoading.postValue(false)
+                }
+                .collectLatest {
+                    isDataReLoading.postValue(false)
+                    isDataLoading.postValue(false)
+                    articles.postValue(it)
+                }
+        }
     }
 
     fun reloadNews() {

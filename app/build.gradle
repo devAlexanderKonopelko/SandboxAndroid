@@ -67,10 +67,6 @@ dependencies {
     // Navigation
     implementation "ru.terrakok.cicerone:cicerone:5.0.0"
 
-    //RxJava
-    implementation 'io.reactivex.rxjava3:rxjava:3.0.0'
-    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
-
     // Retrofit 2 + OkHTTP3
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
@@ -83,5 +79,4 @@ dependencies {
 
     // Pagination 3
     implementation "androidx.paging:paging-runtime-ktx:$paging_version"
-    implementation "androidx.paging:paging-rxjava3:$paging_version" // RxJava3 support
 }
