@@ -10,9 +10,8 @@ import com.konopelko.sandboxandroid.presentation.navigation.Screens
 import com.konopelko.sandboxandroid.utils.disposable.addToSubscriptions
 import io.reactivex.rxjava3.disposables.Disposable
 import ru.terrakok.cicerone.Router
-import javax.inject.Inject
 
-class HomeViewModel @Inject constructor(
+class HomeViewModel(
     private val getAndroidNews: GetAndroidNewsUseCase,
     private val router: Router
 ) : ViewModel() {

@@ -11,9 +11,8 @@ import com.konopelko.sandboxandroid.data.source.NewsPagingSource
 import com.konopelko.sandboxandroid.domain.repository.NewsRepository
 import io.reactivex.rxjava3.core.Observable
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import javax.inject.Inject
 
-class RealGetAndroidNewsUseCase @Inject constructor(
+class RealGetAndroidNewsUseCase(
     private val newsRepository: NewsRepository
 ) : GetAndroidNewsUseCase {
 

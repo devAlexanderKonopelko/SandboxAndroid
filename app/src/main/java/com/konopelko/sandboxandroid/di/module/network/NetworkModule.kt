@@ -1,28 +1,23 @@
 package com.konopelko.sandboxandroid.di.module.network
 
 import com.konopelko.sandboxandroid.BuildConfig
-import com.konopelko.sandboxandroid.data.api.NewsApi
 import com.konopelko.sandboxandroid.data.api.http.createApi
 import com.konopelko.sandboxandroid.data.api.http.createHttpClient
-import dagger.Module
-import dagger.Provides
-import okhttp3.OkHttpClient
-import javax.inject.Inject
-import javax.inject.Singleton
+import org.koin.core.qualifier.named
+import org.koin.dsl.module
 
-@Module
-class NetworkModule {
+private const val HTTP_CLIENT_BASE = "api.client.base"
 
-    @Singleton
-    @Provides
-    fun provideHttpClient(): OkHttpClient = createHttpClient()
+val koinModuleNetwork = module {
 
-    @Singleton
-    @Provides
-    @Inject
-    fun provideApi(httpClient: OkHttpClient): NewsApi =
+    single(named(HTTP_CLIENT_BASE)) {
+        createHttpClient()
+    }
+
+    single {
         createApi(
-            httpClient,
-            BuildConfig.NEWS_API_HOST
+            httpClient = get(named(HTTP_CLIENT_BASE)),
+            hostUrl = BuildConfig.NEWS_API_HOST
         )
+    }
 }

@@ -1,6 +1,5 @@
 package com.konopelko.sandboxandroid.presentation.view.details
 
-import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
@@ -12,27 +11,20 @@ import androidx.core.os.bundleOf
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
-import com.konopelko.sandboxandroid.SandboxAndroidApplication
 import com.konopelko.sandboxandroid.data.api.entity.response.NewsResponse
 import com.konopelko.sandboxandroid.databinding.FragmentDetailsBinding
 import com.konopelko.sandboxandroid.presentation.viewmodel.details.DetailsViewModel
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DetailsFragment : Fragment() {
 
-    @Inject
-    lateinit var viewModel: DetailsViewModel
+    val viewModel: DetailsViewModel by viewModel()
 
     private var binding: FragmentDetailsBinding? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewModel.setArticle(arguments?.getParcelable(KEY_ARTICLE)!!)
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (context.applicationContext as SandboxAndroidApplication).appComponent.inject(this)
     }
 
     override fun onCreateView(

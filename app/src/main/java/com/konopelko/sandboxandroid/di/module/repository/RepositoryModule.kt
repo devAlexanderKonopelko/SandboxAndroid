@@ -1,19 +1,14 @@
 package com.konopelko.sandboxandroid.di.module.repository
 
-import com.konopelko.sandboxandroid.data.api.NewsApi
 import com.konopelko.sandboxandroid.data.repository.RealNewsRepository
 import com.konopelko.sandboxandroid.domain.repository.NewsRepository
-import dagger.Module
-import dagger.Provides
-import javax.inject.Inject
-import javax.inject.Singleton
+import org.koin.dsl.module
 
-@Module
-class RepositoryModule {
+val koinModuleRepository = module {
 
-    @Singleton
-    @Provides
-    @Inject
-    fun provide(api: NewsApi): NewsRepository =
-        RealNewsRepository(api)
+    single<NewsRepository> {
+        RealNewsRepository(
+            api = get()
+        )
+    }
 }

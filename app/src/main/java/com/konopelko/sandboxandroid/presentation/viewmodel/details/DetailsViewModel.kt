@@ -5,9 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.konopelko.sandboxandroid.data.api.entity.response.NewsResponse
 import ru.terrakok.cicerone.Router
-import javax.inject.Inject
 
-class DetailsViewModel @Inject constructor(
+class DetailsViewModel(
     private val router: Router
 ) : ViewModel() {
 

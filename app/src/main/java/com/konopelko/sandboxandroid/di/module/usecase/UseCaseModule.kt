@@ -1,19 +1,14 @@
 package com.konopelko.sandboxandroid.di.module.usecase
 
-import com.konopelko.sandboxandroid.domain.repository.NewsRepository
 import com.konopelko.sandboxandroid.domain.usecase.getnews.GetAndroidNewsUseCase
 import com.konopelko.sandboxandroid.domain.usecase.getnews.RealGetAndroidNewsUseCase
-import dagger.Module
-import dagger.Provides
-import javax.inject.Inject
-import javax.inject.Singleton
+import org.koin.dsl.module
 
-@Module
-class UseCaseModule {
+val koinModuleUseCase = module {
 
-    @Singleton
-    @Provides
-    @Inject
-    fun provide(newsRepository: NewsRepository): GetAndroidNewsUseCase =
-        RealGetAndroidNewsUseCase(newsRepository)
+    single<GetAndroidNewsUseCase> {
+        RealGetAndroidNewsUseCase(
+            newsRepository = get()
+        )
+    }
 }

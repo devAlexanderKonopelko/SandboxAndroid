@@ -1,7 +1,5 @@
 package com.konopelko.sandboxandroid.presentation.view.home
 
-import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,31 +8,24 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.konopelko.sandboxandroid.R
-import com.konopelko.sandboxandroid.SandboxAndroidApplication
 import com.konopelko.sandboxandroid.databinding.FragmentHomeBinding
 import com.konopelko.sandboxandroid.presentation.adapter.news.NewsAdapter
 import com.konopelko.sandboxandroid.presentation.adapter.news.comparator.NewsComparator
 import com.konopelko.sandboxandroid.presentation.viewmodel.home.HomeViewModel
 import kotlinx.android.synthetic.main.fragment_home.*
-import javax.inject.Inject
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class HomeFragment : Fragment() {
 
-    @Inject
-    lateinit var viewModel: HomeViewModel
+    val viewModel: HomeViewModel by viewModel()
 
     private var binding: FragmentHomeBinding? = null
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        (context.applicationContext as SandboxAndroidApplication).appComponent.inject(this)
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         setupBinding()
         return binding!!.root

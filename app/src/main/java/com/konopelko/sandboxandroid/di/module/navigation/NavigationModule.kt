@@ -1,29 +1,29 @@
 package com.konopelko.sandboxandroid.di.module.navigation
 
-import dagger.Module
-import dagger.Provides
-import okhttp3.Route
-import ru.terrakok.cicerone.BaseRouter
+import org.koin.core.qualifier.named
+import org.koin.dsl.module
 import ru.terrakok.cicerone.Cicerone
 import ru.terrakok.cicerone.NavigatorHolder
 import ru.terrakok.cicerone.Router
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Module
-class NavigationModule {
+private const val CICERONE_ROUTER = "cicerone.router"
 
-    @Singleton
-    @Provides
-    fun provideCicerone(): Cicerone<Router> = Cicerone.create()
+val koinModuleNavigation = module {
 
-    @Singleton
-    @Provides
-    @Inject
-    fun provideRouter(cicerone: Cicerone<Router>): Router = cicerone.router
+    single<Cicerone<Router>>(named(CICERONE_ROUTER)) {
+        Cicerone.create()
+    }
 
-    @Singleton
-    @Provides
-    @Inject
-    fun provideNavigationHolder(cicerone: Cicerone<Router>): NavigatorHolder = cicerone.navigatorHolder
+    single {
+        provideRouter(get(named(CICERONE_ROUTER)))
+    }
+
+    single {
+        provideNavigationHolder(get(named(CICERONE_ROUTER)))
+    }
 }
+
+private fun provideRouter(cicerone: Cicerone<Router>): Router = cicerone.router
+
+private fun provideNavigationHolder(cicerone: Cicerone<Router>): NavigatorHolder =
+    cicerone.navigatorHolder
