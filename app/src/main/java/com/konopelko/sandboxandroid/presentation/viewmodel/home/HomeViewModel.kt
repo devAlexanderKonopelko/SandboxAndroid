@@ -8,6 +8,7 @@ import com.konopelko.sandboxandroid.data.api.entity.response.NewsResponse
 import com.konopelko.sandboxandroid.domain.usecase.getnews.GetAndroidNewsUseCase
 import com.konopelko.sandboxandroid.presentation.navigation.Screens
 import com.konopelko.sandboxandroid.utils.disposable.addToSubscriptions
+import com.konopelko.sandboxandroid.utils.disposable.disposeSubscriptions
 import io.reactivex.rxjava3.disposables.Disposable
 import ru.terrakok.cicerone.Router
 import javax.inject.Inject
@@ -57,9 +58,7 @@ class HomeViewModel @Inject constructor(
 
     private val lifecycleObserver = object : DefaultLifecycleObserver {
         override fun onStop(owner: LifecycleOwner) {
-            subscriptions.forEach {
-                it.dispose()
-            }
+            subscriptions.disposeSubscriptions()
             super.onStop(owner)
         }
     }
