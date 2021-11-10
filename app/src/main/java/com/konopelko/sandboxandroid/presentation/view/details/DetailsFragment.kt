@@ -57,7 +57,7 @@ class DetailsFragment : Fragment() {
     }
 
     private fun setupToolbarPaddings() {
-        ViewCompat.setOnApplyWindowInsetsListener(binding?.detailAppBarLayout!!) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(binding.detailAppBarLayout) { v, insets ->
             binding.detailAppBarLayout.setPadding(0, 0, 0, 0)
             WindowInsetsCompat.CONSUMED
         }

@@ -24,7 +24,9 @@ class DetailsViewModel @Inject constructor(
     }
 
     fun setArticle(arguments: Bundle?) {
-        article.value = arguments?.getParcelable(KEY_ARTICLE)
+        arguments?.let {
+            article.value = it.getParcelable(KEY_ARTICLE)
+        }
     }
 
     fun getArticle(): LiveData<NewsResponse.Article> = article
