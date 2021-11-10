@@ -23,11 +23,13 @@ class DetailsFragment : Fragment() {
     @Inject
     lateinit var viewModel: DetailsViewModel
 
-    private var binding: FragmentDetailsBinding? = null
+    private val binding: FragmentDetailsBinding by lazy {
+        FragmentDetailsBinding.inflate(layoutInflater)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel.setArticle(arguments?.getParcelable(KEY_ARTICLE)!!)
+        viewModel.setArticle(arguments)
     }
 
     override fun onAttach(context: Context) {
@@ -40,9 +42,8 @@ class DetailsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentDetailsBinding.inflate(inflater, container, false)
         setupBinding()
-        return binding!!.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -57,7 +58,7 @@ class DetailsFragment : Fragment() {
 
     private fun setupToolbarPaddings() {
         ViewCompat.setOnApplyWindowInsetsListener(binding?.detailAppBarLayout!!) { v, insets ->
-            binding?.detailAppBarLayout!!.setPadding(0, 0, 0, 0)
+            binding.detailAppBarLayout.setPadding(0, 0, 0, 0)
             WindowInsetsCompat.CONSUMED
         }
     }
@@ -72,8 +73,8 @@ class DetailsFragment : Fragment() {
     }
 
     private fun setupBinding() {
-        binding?.lifecycleOwner = viewLifecycleOwner
-        binding?.viewModel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
     }
 
     companion object {

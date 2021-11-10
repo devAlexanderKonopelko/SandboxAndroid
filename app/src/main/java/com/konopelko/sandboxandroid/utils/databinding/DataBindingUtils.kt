@@ -15,8 +15,9 @@ fun <T> setRecyclerViewProperties(recyclerView: RecyclerView, data: T) {
 
 @BindingAdapter("imageUrl")
 fun loadImage(view: ImageView, url: String?) {
-    if (!url.isNullOrEmpty())
+    url?.let {
         Glide.with(view.context).load(url).into(view)
+    }
 }
 
 @BindingAdapter("isRefreshing")

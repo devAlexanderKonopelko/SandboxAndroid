@@ -1,5 +1,6 @@
 package com.konopelko.sandboxandroid.presentation.viewmodel.details
 
+import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,11 +23,16 @@ class DetailsViewModel @Inject constructor(
         router.exit()
     }
 
-    fun setArticle(article: NewsResponse.Article) {
-        this.article.value = article
+    fun setArticle(arguments: Bundle?) {
+        article.value = arguments?.getParcelable(KEY_ARTICLE)
     }
 
     fun getArticle(): LiveData<NewsResponse.Article> = article
 
     fun getIsReadArticleClicked(): LiveData<Boolean> = isReadArticleClicked
+
+    companion object {
+
+        private const val KEY_ARTICLE = "key.article"
+    }
 }

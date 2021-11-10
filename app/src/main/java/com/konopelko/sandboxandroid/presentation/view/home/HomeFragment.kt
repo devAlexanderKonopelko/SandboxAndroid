@@ -1,7 +1,6 @@
 package com.konopelko.sandboxandroid.presentation.view.home
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -23,7 +22,9 @@ class HomeFragment : Fragment() {
     @Inject
     lateinit var viewModel: HomeViewModel
 
-    private var binding: FragmentHomeBinding? = null
+    private val binding: FragmentHomeBinding by lazy {
+        FragmentHomeBinding.inflate(layoutInflater)
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -34,10 +35,9 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
+    ): View {
         setupBinding()
-        return binding!!.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -54,15 +54,15 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupSwipeRefreshLayout() {
-        binding?.homeSwipeRefreshLayout?.isRefreshing = false
-        binding?.homeSwipeRefreshLayout?.setOnRefreshListener {
+        binding.homeSwipeRefreshLayout.isRefreshing = false
+        binding.homeSwipeRefreshLayout.setOnRefreshListener {
             viewModel.reloadNews()
         }
     }
 
     private fun setupBinding() {
-        binding?.lifecycleOwner = viewLifecycleOwner
-        binding?.viewmodel = viewModel
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewmodel = viewModel
     }
 
     private fun setupRecyclerView() {
@@ -71,10 +71,5 @@ class HomeFragment : Fragment() {
         newsRecyclerView.adapter = NewsAdapter(NewsComparator) { article ->
             viewModel.onNewsClicked(article)
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        binding = null
     }
 }
